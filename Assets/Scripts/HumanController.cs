@@ -7,7 +7,8 @@ public class HumanController : MonoBehaviour
     public Shoot ShootPreFab;
     public Shoot shoot;
     public Transform ShootHolder;
-    public Transform aim;
+    public Transform aimX;
+    public Transform aimY;
     float nextShot = 0;
     public float m_speed = 10.0f;
     public float s_speed = 5.0f;
@@ -19,7 +20,7 @@ public class HumanController : MonoBehaviour
     void Start()
     {
         nextShot = Time.time;
-        ShootHolder = GameObject.Find("Level/Shots").transform;
+        ShootHolder = GameObject.Find("Level/ShootHolder").transform;
         startLocation = gameObject.transform.localPosition;
         player = gameObject;
     }
@@ -27,7 +28,8 @@ public class HumanController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        aimX = GameObject.Find("Head").transform;
+        Debug.Log("HEAD :" + aimX.rotation);
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * m_speed;
@@ -39,25 +41,24 @@ public class HumanController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             transform.position += transform.right * Time.deltaTime * s_speed;
-
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.position -= transform.right * Time.deltaTime * s_speed;
-
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Time.time - nextShot > 1)
             {
+                shoot = Instantiate(ShootPreFab, aimX.position, aimX.rotation, ShootHolder);
+                //shoot.gameObject.AddComponent<Rigidbody>();
+                Rigidbody shootRB = shoot.GetComponent<Rigidbody>();
 
-                aim = GameObject.Find("Head").transform;
-                Debug.Log(aim);
-                shoot = Instantiate(ShootPreFab, transform.position, transform.rotation, ShootHolder);
-                shoot.GetComponent<Shoot>().FireShoot(aim);
-
+                //shootRB.GetComponent<Shoot>().FireShoot();
+                shootRB.AddForce(aimX.up * 7500f);
                 nextShot = Time.time;
-                Destroy(shoot, 10f);
+                Destroy(shoot.gameObject, 5);
+                
             }
         }
     }

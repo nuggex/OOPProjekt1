@@ -14,20 +14,21 @@ public class SlugSpawner : MonoBehaviour
     private void Start()
     {
         nextShot = Time.time;
-        ShootHolder = GameObject.Find("Level/Shots").transform;
+        ShootHolder = GameObject.Find("Level/ShootHolder").transform;
        // aim = GameObject.Find("Level/Terrain/Robot Kyle/Root/Ribs/Neck/Head").transform;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         if (Time.time - nextShot > 1)
         {
 
             aim = GameObject.Find("Level/Terrain/Robot Kyle/Root/Ribs/Neck/Head").transform;
 
             shoot = Instantiate(ShootPreFab, transform.position, transform.rotation, ShootHolder);
-            shoot.GetComponent<Shoot>().FireShoot(aim);
+        //    shoot.GetComponent<Shoot>().FireShoot(aim);
 
             nextShot = Time.time;
             Destroy(shoot, 10f);

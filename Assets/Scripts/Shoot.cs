@@ -9,13 +9,9 @@ public class Shoot : MonoBehaviour
     Vector3 SpawnPosition;
     
 
-    public void FireShoot(Transform aimDirection)
+    public void FireShoot()
     {
-        float xDir = aimDirection.transform.position.x;
-        float yDir = aimDirection.transform.position.y;
-        float zDir = aimDirection.transform.position.z;
-        Vector3 aimVector = new Vector3(xDir, yDir, zDir);
-        Debug.Log(aimVector);
-        Rbshot.AddForce(aimVector, ForceMode.Impulse);
+        Rbshot = gameObject.GetComponent<Rigidbody>();
+        //Rbshot.AddForce(transform.up * 100f);
     }
 }
