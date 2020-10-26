@@ -19,7 +19,6 @@ public class MouseLook : MonoBehaviour
     {
         if (axes == RotationAxes.MouseXAndY)
         {
-            Debug.Log("X and Y");
             rotationX += Input.GetAxis("Mouse X") * sensitivityX;
             rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
             rotationX = ClampAngle(rotationX, minimumX, maximumX);
@@ -39,7 +38,6 @@ public class MouseLook : MonoBehaviour
         }*/
         else
         {
-            Debug.Log("Y");
             rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
             rotationY = ClampAngle(rotationY, minimumY, maximumY);
             Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.forward);
