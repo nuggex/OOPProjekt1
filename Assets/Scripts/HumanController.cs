@@ -16,6 +16,8 @@ public class HumanController : MonoBehaviour
     Rigidbody rb;
     GameObject player;
     Vector3 startLocation;
+
+    float points = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,6 @@ public class HumanController : MonoBehaviour
     void FixedUpdate()
     {
         aimX = GameObject.Find("Head").transform;
-        Debug.Log("HEAD :" + aimX.rotation);
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * m_speed;
@@ -61,5 +62,11 @@ public class HumanController : MonoBehaviour
                 
             }
         }
+    }
+
+    public void Killed()
+    {
+        points += 1;
+        Debug.Log("Killed");
     }
 }
