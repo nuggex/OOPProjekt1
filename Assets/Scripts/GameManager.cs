@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public HumanController hc;
+
+    public List<GameObject> ButterFlies;
+    public List<GameObject> Slugs;
     private void Awake()
     {
 
@@ -44,9 +47,6 @@ public class GameManager : MonoBehaviour
     {
         hc.Killed();
     }
-
-
-
 }
 
 public enum Rewards
