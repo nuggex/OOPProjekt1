@@ -14,6 +14,7 @@ public class MouseLook : MonoBehaviour
     float maximumY = 60F;
     float rotationX = 0F;
     float rotationY = 0F;
+    Rigidbody Rigid;
     Quaternion originalRotation;
     void FixedUpdate()
     {
@@ -26,7 +27,8 @@ public class MouseLook : MonoBehaviour
             //Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, -Vector3.right);
             Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.forward);
             transform.localRotation = originalRotation * yQuaternion;
-            transform.parent.parent.parent.parent.rotation = originalRotation * Quaternion.AngleAxis(rotationX, Vector3.up);
+            //Rigid.MoveRotation(Rigid.rotation * Quaternion.Euler(new Vector3(0, rotationX*0.1f, 0)));
+            transform.parent.parent.parent.parent.rotation = Quaternion.Euler(0,rotationX,0);
         }
         /*else if (axes == RotationAxes.MouseX)
         {
@@ -46,6 +48,7 @@ public class MouseLook : MonoBehaviour
     }
     void Start()
     {
+        Rigid = gameObject.GetComponentInParent<Rigidbody>();
         originalRotation = transform.localRotation;
     }
     public static float ClampAngle(float angle, float min, float max)

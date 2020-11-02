@@ -84,7 +84,6 @@ public class ButterFlyController : MonoBehaviour
         }
         if (collision.collider.name == "SlugPreFab(Clone)")
         {
-            Debug.Log("hit");
             GameManager.instance.Killpoints();
             
             //Destroy(this.gameObject);

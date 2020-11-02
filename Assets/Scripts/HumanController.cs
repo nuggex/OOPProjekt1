@@ -28,6 +28,7 @@ public class HumanController : MonoBehaviour
         startLocation = gameObject.transform.localPosition;
         player = gameObject;
         head = GameObject.Find("Head");
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -36,19 +37,24 @@ public class HumanController : MonoBehaviour
         aimX = head.transform;
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * Time.deltaTime * m_speed;
+            rb.velocity = transform.forward * m_speed;
+            //rb.transform.Translate(transform.position *2f);
+            //transform.position += transform.forward * Time.deltaTime * m_speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= transform.forward * Time.deltaTime * m_speed;
+            rb.transform.Translate(-transform.forward);
+            //transform.position -= transform.forward * Time.deltaTime * m_speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += transform.right * Time.deltaTime * s_speed;
+            rb.transform.Translate(-transform.right* 1.5f);
+            //transform.position += transform.right * Time.deltaTime * s_speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position -= transform.right * Time.deltaTime * s_speed;
+            rb.transform.Translate(transform.right * 1.5f);
+            //transform.position -= transform.right * Time.deltaTime * s_speed;
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -57,12 +63,18 @@ public class HumanController : MonoBehaviour
                 shoot = Instantiate(ShootPreFab, aimX.position, aimX.rotation, ShootHolder);
                 //shoot.gameObject.AddComponent<Rigidbody>();
                 Rigidbody shootRB = shoot.GetComponent<Rigidbody>();
+                //Debug.Log("Player Velocity: " + rb.velocity.magnitude);
+                float speed = ((7500f * rb.velocity.magnitude) < 5000f) ? 7500f : 7500f * rb.velocity.magnitude;
 
                 //shootRB.GetComponent<Shoot>().FireShoot();
-                shootRB.AddForce(aimX.up * 7500f + transform.position);
+                //shootRB.velocity = rb.velocity;
+                //shootRB.angularVelocity = rb.angularVelocity;
+                shootRB.AddForce((aimX.up) * speed );
+                Debug.Log("test");
+                Debug.Log("speed" + speed);
                 nextShot = Time.time;
                 Destroy(shoot.gameObject, 5);
-                
+
             }
         }
     }
