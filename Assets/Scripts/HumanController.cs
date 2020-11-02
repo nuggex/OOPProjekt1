@@ -19,10 +19,13 @@ public class HumanController : MonoBehaviour
     GameObject head;
     Vector3 startLocation;
 
+    CharacterController Character;
+
     float points = 0;
     // Start is called before the first frame update
     void Start()
     {
+        Character = gameObject.GetComponent<CharacterController>();
         nextShot = Time.time;
         ShootHolder = GameObject.Find("Level/ShootHolder").transform;
         startLocation = gameObject.transform.localPosition;
@@ -34,16 +37,18 @@ public class HumanController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log(rb.velocity);
         aimX = head.transform;
         if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity = transform.forward * m_speed;
-            //rb.transform.Translate(transform.position *2f);
+            Character.SimpleMove(Vector3.ClampMagnitude(transform.forward * Time.deltaTime, 1.0f));
+            //rb.transform.Translate(transform.forward *2f);
             //transform.position += transform.forward * Time.deltaTime * m_speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.transform.Translate(-transform.forward);
+            Character.SimpleMove(Vector3.ClampMagnitude(-transform.forward * Time.deltaTime, 1.0f));
+            //rb.transform.Translate(-transform.forward);
             //transform.position -= transform.forward * Time.deltaTime * m_speed;
         }
         if (Input.GetKey(KeyCode.A))

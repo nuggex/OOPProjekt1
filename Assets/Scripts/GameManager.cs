@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> ButterFlies;
     public List<GameObject> Slugs;
+    public List<Transform> Platforms;
     private void Awake()
     {
 
