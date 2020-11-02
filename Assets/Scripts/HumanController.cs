@@ -70,6 +70,5 @@ public class HumanController : MonoBehaviour
     public void Killed()
     {
         points += 1;
-        Debug.Log("Killed");
     }
 }

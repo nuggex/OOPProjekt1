@@ -52,9 +52,9 @@ public class ButterFlyController : MonoBehaviour
         flySpeed = Random.Range(75f, 200f);
         if (randDirectionIterator > UppwardsLimit)
         {
-            float YForce = Random.Range(4.5f, 12.5f);
+            float YForce = Random.Range(10.5f, 20.5f);
             Vector3 flightpattern = new Vector3(0, YForce, 0);
-            ButterFlyRB.AddForce(flightpattern, ForceMode.Impulse);
+            ButterFlyRB.AddForce(flightpattern * 10f + transform.position, ForceMode.Impulse);
         }
 
         if (randDirectionIterator > DirectionLimit)
@@ -86,18 +86,16 @@ public class ButterFlyController : MonoBehaviour
         {
             Debug.Log("hit");
             GameManager.instance.Killpoints();
-            Destroy(this.gameObject);
+            
+            //Destroy(this.gameObject);
         }
     }
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("We Stuck");
-        Debug.Log("Rotation when stuck: " + transform.rotation.x);
         if (collision.collider.tag == "Wall")
         {
 
             Vector3 CorrectionHeading = new Vector3(transform.rotation.x, -1 * transform.rotation.y, transform.rotation.z);
-            //transform.eulerAngles = CorrectionHeading;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(newHeading), 0.7f);
         }
     }
