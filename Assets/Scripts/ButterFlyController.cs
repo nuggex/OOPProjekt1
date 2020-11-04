@@ -82,7 +82,7 @@ public class ButterFlyController : MonoBehaviour
             //transform.eulerAngles = CorrectionHeading;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(newHeading), 0.7f);
         }
-        if (collision.collider.name == "SlugPreFab(Clone)")
+        if (collision.collider.tag == "Bullet")
         {
             GameManager.instance.Killpoints();
             
