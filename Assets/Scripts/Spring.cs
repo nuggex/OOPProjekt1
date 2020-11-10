@@ -12,53 +12,50 @@ public class Spring : MonoBehaviour
     public float PlatForm;
     private float PlayerVelocity;
     private bool WhereIsKyle;
-    public float K;
+    public float a;
     public float SpringF;
-    public float StartPosY;
-    public float LastY;
-    public float Mass;
+    public float Y;
     public float deltaY;
     // Start is called before the first frame update
     void Start()
     {
-        StartPosY = LowerCube.transform.localPosition.y;
-        SpringF = 20.0f;
-        K = 9.82f;
+        SpringF = 100.0f;
+        a = 9.82f;
         WhereIsKyle = false;
         PlatForm = 100.0f;
-        Mass = 50.0f;
-        deltaY = (PlatForm * K) / SpringF;
+        Y = (PlatForm * a) / SpringF;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // F = m * a if kyle is on platform // 
-
-        // vel_next_update = vel_current + time_step * acceleration // 
-        //  pos_next_update = pos_current + time_step * vel_current
         float Fr;
-        //Fr = F - Fk;
-        //Fr = K * PlatForm -(-SpringF * LowerCube.transform.localPosition.y);
-        deltaY = LowerCube.transform.position.y - LastY;
-        float Fg = PlatForm * K;
+        float Ar;
+
+        deltaY = Y + (Y-LowerCube.transform.position.y);
+        float Fg = PlatForm * a;
         float F = deltaY * SpringF;
         Fr = F - Fg;
+        Ar = Fr / PlatForm;
+        float Ar2 = Fr / a;
 
-        Debug.Log("fr " + Fr);
+        Debug.Log("AR " + Ar);
+        Debug.Log("AR2 " + Ar2);
 
+        Vector3 newpos = new Vector3(0, (this.transform.position.y + Ar), 0);
+        Vector3 newpos2 = new Vector3(0, (this.transform.position.y + Ar2), 0);
 
-        if (WhereIsKyle)
-        {
-            PlatForm = 50.0f;
-        }
+        Debug.Log(newpos);
+        Debug.Log(newpos2);
 
-        Vector3 CurrentPosition = LowerCube.transform.position;
-        float CurrentVelocity = LowerCube.transform.position.magnitude;
-        Vector3 NextPosition = new Vector3(0, (LowerCube.transform.position.y) + (Fr * Time.deltaTime * 0.05f), 0);
-        //LowerCube.transform.position = new Vector3(this.transform.position.x, LowerCube.transform.position.magnitude + Time.deltaTime * 10.0f,this.transform.position.z); 
-        LowerCube.transform.localPosition += NextPosition;
-        LastY = LowerCube.transform.position.y;
+        //LowerCube.transform.position = new Vector3(this.transform.position.x, (this.transform.position.y + Ar )* Time.deltaTime , this.transform.position.z);
+        LowerCube.transform.Translate(newpos * (Time.deltaTime),Space.World);
+
+        //Vector3 CurrentPosition = LowerCube.transform.position;
+        //float CurrentVelocity = LowerCube.transform.position.magnitude;
+        //Vector3 NextPosition = new Vector3(0, (LowerCube.transform.position.y) + (Ar * Time.deltaTime * 0.05f), 0);
+        //LowerCube.transform.localPosition += NextPosition;
+        //LastY = LowerCube.transform.position.y;
 
     }
 
