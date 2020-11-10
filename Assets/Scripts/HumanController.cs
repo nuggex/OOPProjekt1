@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 public class HumanController : MonoBehaviour
@@ -18,17 +19,21 @@ public class HumanController : MonoBehaviour
     GameObject player;
     GameObject head;
     Vector3 startLocation;
+    Vector3 LastPosition;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 2.0f;
     private float jumpHeight = 65f;
     private float gravityValue = -150f;
+    public float Weight { get; set; }
+    public float VelocityY;
     CharacterController Character;
 
     float points = 0;
     // Start is called before the first frame update
     void Start()
     {
+        Weight = 75.0f;
         Character = gameObject.GetComponent<CharacterController>();
         nextShot = Time.time;
         ShootHolder = GameObject.Find("Level/ShootHolder").transform;
@@ -40,6 +45,9 @@ public class HumanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        VelocityY = (transform.position.y - this.LastPosition.y) / Time.deltaTime;
+        this.LastPosition = transform.position;
+
         aimX = head.transform;
 
         groundedPlayer = Character.isGrounded;
@@ -49,7 +57,6 @@ public class HumanController : MonoBehaviour
         }*/
 
         gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0));
-        Debug.Log(groundedPlayer);
         //Vector3 move = new Vector3(Input.GetAxis("Vertical"), gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y);
         //Debug.Log(move);
         
@@ -76,9 +83,7 @@ public class HumanController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && groundedPlayer)
         {
-            Debug.Log("Is Jumping");
             playerVelocity.y = jumpHeight;
-            Debug.Log("Jump velocity: " + playerVelocity.y);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -127,7 +132,6 @@ public class HumanController : MonoBehaviour
         }*/
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            Debug.Log("LeftControl");
             if (Time.time - nextShot > 0.05f)
             {
                 
@@ -141,17 +145,31 @@ public class HumanController : MonoBehaviour
                 //shootRB.velocity = rb.velocity;
                 //shootRB.angularVelocity = rb.angularVelocity;
                 shootRB.AddForce((aimX.up) * speed );
-                Debug.Log("test");
-                Debug.Log("speed" + speed);
                 nextShot = Time.time;
                 Destroy(shoot.gameObject, 5);
 
             }
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.collider.name);
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.name == "Lower")
+        {
+            GameManager.instance.TriggerSpringForce();
+        }
+        if(hit.collider.name != "Lower")
+        {
+            GameManager.instance.UnTriggerSpringForce();
+        }
+    }
+    
     public void Killed()
     {
         points += 1;
     }
+    
 }

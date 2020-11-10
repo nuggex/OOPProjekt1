@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public HumanController hc;
-
+    public Spring sp;
     public List<GameObject> ButterFlies;
     public List<GameObject> Slugs;
     public List<Transform> Platforms;
@@ -22,27 +22,26 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        resetPlayer();
-        resetEnemies();
+     
     }
 
-    private void resetCollectibles()
+    public float GetWeight()
     {
-        Transform collectibleHolder = GameObject.Find("Level/Collectibles").transform;
-        Transform[] rewards = collectibleHolder.GetComponentsInChildren<Transform>(includeInactive: true);
-        foreach (Transform reward in rewards)
-        {
-            reward.gameObject.SetActive(true);
-        }
-        return;
+        return hc.Weight;
     }
-    private void resetPlayer()
-    {
-        
-    }
-    private void resetEnemies()
-    {
 
+    public float GetVelocity()
+    {
+        return hc.VelocityY;
+    }
+
+    public void TriggerSpringForce()
+    {
+        sp.Activate();
+    }
+    public void UnTriggerSpringForce()
+    {
+        sp.Disable();
     }
     public void Killpoints()
     {
