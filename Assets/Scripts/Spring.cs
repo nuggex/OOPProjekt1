@@ -36,17 +36,15 @@ public class Spring : MonoBehaviour
         float Fg = PlatForm * a;
         float F = deltaY * SpringF;
         Fr = F - Fg;
-        Ar = Fr / PlatForm;
-        float Ar2 = Fr / a;
+        Ar = Fr / PlatForm; // THIS IS THE RIGHT FORMULA IT JUST WORKS WRONG
+        float Ar2 = Fr / a; // THIS IS NOT THE RIGHT FORMULA BUT IT SORTA WORKS
 
         Debug.Log("AR " + Ar);
         Debug.Log("AR2 " + Ar2);
 
         Vector3 newpos = new Vector3(0, (this.transform.position.y + Ar), 0);
-        Vector3 newpos2 = new Vector3(0, (this.transform.position.y + Ar2), 0);
 
         Debug.Log(newpos);
-        Debug.Log(newpos2);
 
         //LowerCube.transform.position = new Vector3(this.transform.position.x, (this.transform.position.y + Ar )* Time.deltaTime , this.transform.position.z);
         LowerCube.transform.Translate(newpos * (Time.deltaTime),Space.World);
