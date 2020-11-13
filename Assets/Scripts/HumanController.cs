@@ -43,7 +43,7 @@ public class HumanController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         VelocityY = (transform.position.y - this.LastPosition.y) / Time.deltaTime;
         this.LastPosition = transform.position;
@@ -146,7 +146,7 @@ public class HumanController : MonoBehaviour
                 //shootRB.angularVelocity = rb.angularVelocity;
                 shootRB.AddForce((aimX.up) * speed );
                 nextShot = Time.time;
-                Destroy(shoot.gameObject, 5);
+                Destroy(shoot.gameObject, 8);
 
             }
         }

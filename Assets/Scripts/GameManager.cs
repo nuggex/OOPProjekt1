@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ButterFlies;
     public List<GameObject> Slugs;
     public List<Transform> Platforms;
+    public float BulletMass;
+    public float PlatformMass;
     private void Awake()
     {
 

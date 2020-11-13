@@ -16,6 +16,11 @@ public class Shoot : MonoBehaviour
         //Rbshot.AddForce(transform.up * 100f);
     }
 
+    private void OnDestroy()
+    {
+        //GameManager.instance.PlatformMass -= 0.5f;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
 

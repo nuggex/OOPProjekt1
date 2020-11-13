@@ -18,7 +18,7 @@ public class SpringPlatform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.name);
+       // Debug.Log(collision.collider.name);
         if(collision.collider.name == "RobotKyle")
         {
             Debug.Log("Kyle");

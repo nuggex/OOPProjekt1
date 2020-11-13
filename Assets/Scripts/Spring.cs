@@ -15,15 +15,19 @@ public class Spring : MonoBehaviour
     public float a;
     public float SpringF;
     public float Y;
+    public float startY;
     public float deltaY;
+    private float BulletMass;
     // Start is called before the first frame update
     void Start()
     {
+        WhereIsKyle = false;
+        BulletMass = 0;
+        startY = transform.position.y;
         SpringF = 100.0f;
         a = 9.82f;
-        WhereIsKyle = false;
-        PlatForm = 100.0f;
-        Y = (PlatForm * a) / SpringF;
+        GameManager.instance.PlatformMass = 50.0f;
+        Debug.Log(GameManager.instance.PlatformMass);
     }
 
     // Update is called once per frame
@@ -31,29 +35,21 @@ public class Spring : MonoBehaviour
     {
         float Fr;
         float Ar;
+        float Fg;
+        float F;
+        Debug.Log(GameManager.instance.PlatformMass);
+        deltaY = startY - transform.position.y; // How far the GameManager.instance.PlatformMass has moved from origin
+        Fg = GameManager.instance.PlatformMass * a; // Gravitation of the platform
+        F = SpringF * deltaY; // To push of the spring against gravitation
+        Fr = F - Fg; // The resulting force of the spring vs gravity
+        Ar = Fr / GameManager.instance.PlatformMass; // Get the acceleration from force
 
-        deltaY = Y + (Y-LowerCube.transform.position.y);
-        float Fg = PlatForm * a;
-        float F = deltaY * SpringF;
-        Fr = F - Fg;
-        Ar = Fr / PlatForm; // THIS IS THE RIGHT FORMULA IT JUST WORKS WRONG
-        float Ar2 = Fr / a; // THIS IS NOT THE RIGHT FORMULA BUT IT SORTA WORKS
+        //Debug.Log("deltaY: " + deltaY);
+        //Debug.Log("resulting force: " + Fr + " Ar: " + Ar);
+       
+        Vector3 newpos = new Vector3(0,  Ar, 0);
 
-        Debug.Log("AR " + Ar);
-        Debug.Log("AR2 " + Ar2);
-
-        Vector3 newpos = new Vector3(0, (this.transform.position.y + Ar), 0);
-
-        Debug.Log(newpos);
-
-        //LowerCube.transform.position = new Vector3(this.transform.position.x, (this.transform.position.y + Ar )* Time.deltaTime , this.transform.position.z);
-        LowerCube.transform.Translate(newpos * (Time.deltaTime),Space.World);
-
-        //Vector3 CurrentPosition = LowerCube.transform.position;
-        //float CurrentVelocity = LowerCube.transform.position.magnitude;
-        //Vector3 NextPosition = new Vector3(0, (LowerCube.transform.position.y) + (Ar * Time.deltaTime * 0.05f), 0);
-        //LowerCube.transform.localPosition += NextPosition;
-        //LastY = LowerCube.transform.position.y;
+        transform.Translate(newpos * (Time.deltaTime));
 
     }
 
@@ -67,12 +63,12 @@ public class Spring : MonoBehaviour
         WhereIsKyle = false;
     }
 
-
+    
 
     private void OnCollisionEnter(Collision collision)
     {
         Collider myCollider = collision.contacts[0].thisCollider;
-        Debug.Log(myCollider);
+       // Debug.Log(myCollider);
         if (collision.collider.name == "RobotKyle")
         {
             PlayerWeight = GameManager.instance.GetWeight();
