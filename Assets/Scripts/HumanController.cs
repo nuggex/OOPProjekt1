@@ -153,7 +153,7 @@ public class HumanController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.name);
+       // Debug.Log(collision.collider.name);
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {

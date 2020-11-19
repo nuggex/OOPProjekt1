@@ -9,6 +9,7 @@ TagManager:
   - Metal
   - ExplosiveBarrel
   - Bullet
+  - NewtonBall
   layers:
   - Default
   - TransparentFX

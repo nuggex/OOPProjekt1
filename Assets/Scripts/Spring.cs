@@ -27,7 +27,7 @@ public class Spring : MonoBehaviour
         SpringF = 100.0f;
         a = 9.82f;
         GameManager.instance.PlatformMass = 50.0f;
-        Debug.Log(GameManager.instance.PlatformMass);
+       // Debug.Log(GameManager.instance.PlatformMass);
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class Spring : MonoBehaviour
         float Ar;
         float Fg;
         float F;
-        Debug.Log(GameManager.instance.PlatformMass);
+       // Debug.Log(GameManager.instance.PlatformMass);
         deltaY = startY - transform.position.y; // How far the GameManager.instance.PlatformMass has moved from origin
         Fg = GameManager.instance.PlatformMass * a; // Gravitation of the platform
         F = SpringF * deltaY; // To push of the spring against gravitation
@@ -82,7 +82,7 @@ public class Spring : MonoBehaviour
         // F = m * a 
         if (collision.collider.name == "RobotKyle")
         {
-            Debug.Log("Kyle is on platform");
+            //Debug.Log("Kyle is on platform");
         }
 
     }

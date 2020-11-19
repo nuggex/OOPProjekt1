@@ -21,8 +21,6 @@ public class SpringPlatform : MonoBehaviour
        // Debug.Log(collision.collider.name);
         if(collision.collider.name == "RobotKyle")
         {
-            Debug.Log("Kyle");
-            Debug.DrawLine(gameObject.transform.position, collision.collider.transform.position,Color.red);
         }
     }
 }
