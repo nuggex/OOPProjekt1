@@ -31,40 +31,27 @@ public class NewtonsCradle : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!HasCollided)
-        {
-            float eulerZ;
-            //if (Angle > 180) Angle = Angle - 360;
-            float EulersToRad = gameObject.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-            eulerZ = Mathf.Sin(EulersToRad);
-            firstTime = false;
 
-            AngularAcceleration = (-1 * Gravity * eulerZ) / ArmLength;
+        // Get current angle on this update and calculate eulerZ // 
+        float eulerZ;
+        float EulersToRad = gameObject.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+        eulerZ = Mathf.Sin(EulersToRad);
+        firstTime = false;
 
-            //Debug.Log("Rotation Euler Angles:" + gameObject.transform.rotation.eulerAngles.z);
-            //Debug.Log("Angular Acceleration: " + AngularAcceleration);
+        // Calculate angular acceleration // 
+        AngularAcceleration = (-1 * Gravity * eulerZ) / ArmLength;
 
-            Velocity += AngularAcceleration;
-            //Debug.Log("Velocity: " + Velocity);
+        // Add angular velocity to Acceleration // 
+        Velocity += AngularAcceleration;
 
-        }
-        if (HasCollided)
-        {
-            //Velocity += GameManager.instance.PendulumVelocity;
-            HasCollided = false;
-        }
+
+        // Add velocity to Angle // 
         Angle += Velocity;
-        // Debug.Log("Velocity: " + Velocity + " Angle: " + Angle);
+        // Rotate with angle // 
         Quaternion rotation = Quaternion.Euler(0, 0, Angle);
         gameObject.transform.rotation = rotation;
+        // Add velocity to GameManager // 
         GameManager.instance.PendulumVelocity = Velocity;
-        //Debug.Log(gameObject.name + " Velocity: " + GameManager.instance.PendulumVelocity);
-        //Debug.Log(gameObject.name + " Has Collided " + HasCollided);
 
-        if (ThisCollision && Velocity >0)
-        {
-            gameObject.GetComponent<BoxCollider>().enabled = true;
-        }
     }
-
 }
