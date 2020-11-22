@@ -51,15 +51,8 @@ public class HumanController : MonoBehaviour
         aimX = head.transform;
 
         groundedPlayer = Character.isGrounded;
-        /*if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }*/
 
         gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0));
-        //Vector3 move = new Vector3(Input.GetAxis("Vertical"), gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y);
-        //Debug.Log(move);
-        
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -88,63 +81,16 @@ public class HumanController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         Character.Move(playerVelocity * Time.deltaTime);
-        /*if (move != Vector3.zero)
-        {
-            Debug.Log("Moving");
-            
-        }*/
-        /*
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
 
-        playerVelocity.y += gravityValue * Time.time;
-        Character.SimpleMove(playerVelocity * Time.time);
-        */
-        /*
-        if (Input.GetKey(KeyCode.W))
-        {
-            Debug.Log("W");
-            Character.Move(move * Time.deltaTime * 2f);
-            //Character.Move(transform.position * Time.deltaTime * 1f);
-            //rb.transform.Translate(transform.forward *2f);
-            //transform.position += transform.forward * Time.deltaTime * m_speed;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            Debug.Log("S");
-            //Character.Move(Vector3.ClampMagnitude(-rb.transform.forward, 1.0f));
-            //rb.transform.Translate(-transform.forward);
-            //transform.position -= transform.forward * Time.deltaTime * m_speed;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            Debug.Log("A");
-            //rb.transform.Translate(-transform.right* 1.5f);
-            //transform.position += transform.right * Time.deltaTime * s_speed;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            Debug.Log("D");
-            //rb.transform.Translate(transform.right * 1.5f);
-            //transform.position -= transform.right * Time.deltaTime * s_speed;
-        }*/
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Time.time - nextShot > 0.05f)
             {
-                
+
                 shoot = Instantiate(ShootPreFab, aimX.position, aimX.rotation, ShootHolder);
-                //shoot.gameObject.AddComponent<Rigidbody>();
                 Rigidbody shootRB = shoot.GetComponent<Rigidbody>();
-                //Debug.Log("Player Velocity: " + rb.velocity.magnitude);
-                //float speed = ((7500f * rb.velocity.magnitude) < 5000f) ? 7500f : 7500f * rb.velocity.magnitude;
                 float speed = 7500f;
-                //shootRB.GetComponent<Shoot>().FireShoot();
-                //shootRB.velocity = rb.velocity;
-                //shootRB.angularVelocity = rb.angularVelocity;
-                shootRB.AddForce((aimX.up) * speed );
+                shootRB.AddForce((aimX.up) * speed);
                 nextShot = Time.time;
                 Destroy(shoot.gameObject, 8);
 
@@ -153,23 +99,25 @@ public class HumanController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-       // Debug.Log(collision.collider.name);
+      /*  Debug.Log("collision" + collision.collider.gameObject.name);
+        if (collision.gameObject.name == "Lower")
+        {
+            Debug.Log("collision with Lower");
+            GameManager.instance.PlatformMass += 75;
+        }*/
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.name == "Lower")
-        {
-            GameManager.instance.TriggerSpringForce();
-        }
-        if(hit.collider.name != "Lower")
+        /*
+        if (hit.collider.name != "Lower")
         {
             GameManager.instance.UnTriggerSpringForce();
-        }
+        }*/
     }
-    
+
     public void Killed()
     {
         points += 1;
     }
-    
+
 }
