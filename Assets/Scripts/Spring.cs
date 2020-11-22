@@ -51,6 +51,8 @@ public class Spring : MonoBehaviour
 
         transform.Translate(newpos * (Time.deltaTime));
 
+        GameManager.instance.PlatformDeltaY = deltaY;
+
     }
 
     public void Activate()

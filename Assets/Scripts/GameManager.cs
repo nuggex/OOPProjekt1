@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public List<Transform> Platforms;
     public float BulletMass;
     public float PlatformMass;
-
+    public float PlatformDeltaY;
     public List<NewtonsCradle> NewtonsBalls;
 
     public float PendulumVelocity;
